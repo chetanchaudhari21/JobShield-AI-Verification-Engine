@@ -1,0 +1,116 @@
+# JobShield AI - Docker Compose Configuration (Production & Local Development)
+# Conforms to Section 15 of PROJECT_SPECIFICATION.md
+
+services:
+  # ---------------------------------------------------------------------------
+  # 1. PostgreSQL Database Service (Persistent Relational Store)
+  # ---------------------------------------------------------------------------
+  db:
+    image: postgres:16-alpine
+    container_name: jobshield_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-jobshield_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-jobshield_db}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+
+  # ---------------------------------------------------------------------------
+  # 2. FastAPI Backend API Service
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jobshield_backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-jobshield_db}
+      APP_ENV: ${APP_ENV:-development}
+      APP_NAME: "JobShield AI API"
+      CORS_ORIGINS: ${CORS_ORIGINS:-["http://localhost:5173","http://localhost:3000","http://127.0.0.1:5173"]}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY:-jobshield-docker-dev-jwt-secret-key-32-bytes-min}
+      MODERATOR_SECRET_KEY: ${MODERATOR_SECRET_KEY:-jobshield-docker-mod-secret-key-2026}
+      COMMUNITY_SALT: ${COMMUNITY_SALT:-jobshield-docker-community-salt-2026}
+      TESSERACT_CMD: "/usr/bin/tesseract"
+      ML_MODEL_ARTIFACT_PATH: "ml/artifacts/jobshield_fraud_detector_v1.1.0.joblib"
+    volumes:
+      # Mount model artifacts read-only for inference and model registry
+      - ./ml/artifacts:/app/ml/artifacts:ro
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    command: >
+      sh -c "alembic upgrade head &&
+             python -c 'from app.db.session import SessionLocal; from app.services.model_registry import seed_model_registry; db=SessionLocal(); seed_model_registry(db); db.close()' &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+  # ---------------------------------------------------------------------------
+  # 3. Asynchronous Document OCR & Background Worker Service
+  # ---------------------------------------------------------------------------
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: jobshield_worker
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-jobshield_db}
+      APP_ENV: ${APP_ENV:-development}
+      TESSERACT_CMD: "/usr/bin/tesseract"
+      ML_MODEL_ARTIFACT_PATH: "ml/artifacts/jobshield_fraud_detector_v1.1.0.joblib"
+    volumes:
+      - ./ml/artifacts:/app/ml/artifacts:ro
+    # Worker process: polls and processes async OCR document jobs
+    command: python -m app.workers.ocr_worker
+
+  # ---------------------------------------------------------------------------
+  # 4. React Frontend Client (Nginx SPA Server)
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: jobshield_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+# -----------------------------------------------------------------------------
+# Persistent Volumes
+# -----------------------------------------------------------------------------
+volumes:
+  pgdata:
+    name: jobshield_pgdata
+    driver: local

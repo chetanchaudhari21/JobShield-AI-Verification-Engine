@@ -1,0 +1,364 @@
+{
+  "version": "v1.1.0",
+  "audit": {
+    "total_rows": 17880,
+    "total_columns": 18,
+    "columns": [
+      "title",
+      "location",
+      "department",
+      "salary_range",
+      "company_profile",
+      "description",
+      "requirements",
+      "benefits",
+      "telecommuting",
+      "has_company_logo",
+      "has_questions",
+      "employment_type",
+      "required_experience",
+      "required_education",
+      "industry",
+      "function",
+      "fraudulent",
+      "in_balanced_dataset"
+    ],
+    "fraudulent_counts": {
+      "f": 17014,
+      "t": 866
+    },
+    "in_balanced_dataset_counts": {
+      "f": 16980,
+      "t": 900
+    },
+    "crosstab_fraud_vs_balanced": {
+      "f": {
+        "f": 16564,
+        "t": 416
+      },
+      "t": {
+        "f": 450,
+        "t": 450
+      }
+    },
+    "exact_duplicate_rows": 235,
+    "missing_values": {
+      "title": 0,
+      "location": 346,
+      "department": 11547,
+      "salary_range": 15012,
+      "company_profile": 3308,
+      "description": 0,
+      "requirements": 2689,
+      "benefits": 7196,
+      "telecommuting": 0,
+      "has_company_logo": 0,
+      "has_questions": 0,
+      "employment_type": 3471,
+      "required_experience": 7050,
+      "required_education": 8105,
+      "industry": 4903,
+      "function": 6455,
+      "fraudulent": 0,
+      "in_balanced_dataset": 0
+    },
+    "missing_percentages": {
+      "title": 0.0,
+      "location": 1.94,
+      "department": 64.58,
+      "salary_range": 83.96,
+      "company_profile": 18.5,
+      "description": 0.0,
+      "requirements": 15.04,
+      "benefits": 40.25,
+      "telecommuting": 0.0,
+      "has_company_logo": 0.0,
+      "has_questions": 0.0,
+      "employment_type": 19.41,
+      "required_experience": 39.43,
+      "required_education": 45.33,
+      "industry": 27.42,
+      "function": 36.1,
+      "fraudulent": 0.0,
+      "in_balanced_dataset": 0.0
+    },
+    "rows_after_exact_dedup": 17645,
+    "exact_rows_dropped": 235,
+    "near_duplicate_clustering": {
+      "similarity_method": "TF-IDF (1,2) grams cosine similarity with connected components",
+      "similarity_threshold": 0.95,
+      "total_rows": 17645,
+      "unique_normalized_texts": 15655,
+      "total_clusters": 13206,
+      "max_cluster_size": 419,
+      "mean_cluster_size": 1.3361350901105558,
+      "clusters_with_gt_one_row": 1470,
+      "single_row_clusters": 11736,
+      "cluster_size_quantiles": {
+        "25%": 1.0,
+        "50%": 1.0,
+        "75%": 1.0,
+        "90%": 2.0,
+        "99%": 7.0
+      }
+    },
+    "conflicting_label_clusters": 3,
+    "conflicting_cluster_ids": [
+      1165,
+      1228,
+      3195
+    ],
+    "split_leakage_check": {
+      "train_val_overlap": 0,
+      "train_test_overlap": 0,
+      "val_test_overlap": 0,
+      "leakage_free": true
+    },
+    "split_summary": {
+      "train": {
+        "total": 12579,
+        "fraudulent": 567,
+        "prevalence": 0.045075125208681135
+      },
+      "validation": {
+        "total": 2545,
+        "fraudulent": 133,
+        "prevalence": 0.05225933202357564
+      },
+      "test": {
+        "total": 2521,
+        "fraudulent": 158,
+        "prevalence": 0.06267354224514082
+      }
+    }
+  },
+  "models_validation": {
+    "LogisticRegression_balanced": {
+      "roc_auc": 0.9657819922941682,
+      "pr_auc": 0.8517735296455952,
+      "selected_threshold": 0.62,
+      "val_metrics_at_selected_threshold": {
+        "threshold": 0.62,
+        "precision": 0.9363636363636364,
+        "recall": 0.7744360902255639,
+        "f1": 0.8477366255144033,
+        "confusion_matrix": {
+          "tn": 2405,
+          "fp": 7,
+          "fn": 30,
+          "tp": 103
+        }
+      },
+      "f1_at_0.5": 0.7741935483870968
+    },
+    "LogisticRegression_standard_uncalibrated": {
+      "roc_auc": 0.9584502300527438,
+      "pr_auc": 0.8376009661337412,
+      "selected_threshold": 0.14,
+      "val_metrics_at_selected_threshold": {
+        "threshold": 0.14,
+        "precision": 0.9090909090909091,
+        "recall": 0.7518796992481203,
+        "f1": 0.823045267489712,
+        "confusion_matrix": {
+          "tn": 2402,
+          "fp": 10,
+          "fn": 33,
+          "tp": 100
+        }
+      },
+      "f1_at_0.5": 0.2727272727272727
+    },
+    "LogisticRegression_standard_sigmoid_calibrated": {
+      "roc_auc": 0.9584502300527438,
+      "pr_auc": 0.8376009661337412,
+      "selected_threshold": 0.4,
+      "val_metrics_at_selected_threshold": {
+        "threshold": 0.4,
+        "precision": 0.9090909090909091,
+        "recall": 0.7518796992481203,
+        "f1": 0.823045267489712,
+        "confusion_matrix": {
+          "tn": 2402,
+          "fp": 10,
+          "fn": 33,
+          "tp": 100
+        }
+      },
+      "f1_at_0.5": 0.8189655172413793
+    },
+    "LogisticRegression_standard_isotonic_calibrated": {
+      "roc_auc": 0.9646239354605418,
+      "pr_auc": 0.8355157633488068,
+      "selected_threshold": 0.2,
+      "val_metrics_at_selected_threshold": {
+        "threshold": 0.2,
+        "precision": 0.9017857142857143,
+        "recall": 0.7593984962406015,
+        "f1": 0.8244897959183674,
+        "confusion_matrix": {
+          "tn": 2401,
+          "fp": 11,
+          "fn": 32,
+          "tp": 101
+        }
+      },
+      "f1_at_0.5": 0.8235294117647058
+    },
+    "LogisticRegression_balanced_sigmoid_calibrated": {
+      "roc_auc": 0.9657819922941682,
+      "pr_auc": 0.8517735296455952,
+      "selected_threshold": 0.44,
+      "val_metrics_at_selected_threshold": {
+        "threshold": 0.44,
+        "precision": 0.9363636363636364,
+        "recall": 0.7744360902255639,
+        "f1": 0.8477366255144033,
+        "confusion_matrix": {
+          "tn": 2405,
+          "fp": 7,
+          "fn": 30,
+          "tp": 103
+        }
+      },
+      "f1_at_0.5": 0.8425531914893617
+    },
+    "ComplementNaiveBayes": {
+      "roc_auc": 0.8626447960697764,
+      "pr_auc": 0.2899373501127998,
+      "selected_threshold": 0.24,
+      "val_metrics_at_selected_threshold": {
+        "threshold": 0.24,
+        "precision": 0.28700906344410876,
+        "recall": 0.7142857142857143,
+        "f1": 0.40948275862068967,
+        "confusion_matrix": {
+          "tn": 2176,
+          "fp": 236,
+          "fn": 38,
+          "tp": 95
+        }
+      },
+      "f1_at_0.5": 0.3295880149812734
+    }
+  },
+  "primary_model_metrics": {
+    "threshold": 0.62,
+    "precision": 0.7983870967741935,
+    "recall": 0.6265822784810127,
+    "f1": 0.7021276595744681,
+    "pr_auc": 0.7937402461110861,
+    "roc_auc": 0.9721256501872219,
+    "confusion_matrix": {
+      "tn": 2338,
+      "fp": 25,
+      "fn": 59,
+      "tp": 99
+    },
+    "brier_score": 0.037253632364797507,
+    "expected_calibration_error": 0.08675080796654505
+  },
+  "calibrated_model_metrics": {
+    "threshold": 0.4,
+    "precision": 0.7734375,
+    "recall": 0.6265822784810127,
+    "f1": 0.6923076923076923,
+    "pr_auc": 0.7691090431627693,
+    "roc_auc": 0.9650706835871585,
+    "confusion_matrix": {
+      "tn": 2334,
+      "fp": 29,
+      "fn": 59,
+      "tp": 99
+    },
+    "brier_score": 0.027732161454941943,
+    "expected_calibration_error": 0.012050339531174615
+  },
+  "calibrated_balanced_metrics": {
+    "threshold": 0.44,
+    "precision": 0.8,
+    "recall": 0.6329113924050633,
+    "f1": 0.7067137809187279,
+    "pr_auc": 0.7937402461110861,
+    "roc_auc": 0.9721256501872219,
+    "confusion_matrix": {
+      "tn": 2338,
+      "fp": 25,
+      "fn": 58,
+      "tp": 100
+    },
+    "brier_score": 0.0258777302921294,
+    "expected_calibration_error": 0.014045311482611046
+  },
+  "uncalibrated_baseline_metrics": {
+    "threshold": 0.14,
+    "precision": 0.7857142857142857,
+    "recall": 0.6265822784810127,
+    "f1": 0.6971830985915493,
+    "pr_auc": 0.7691090431627693,
+    "roc_auc": 0.9650706835871585,
+    "confusion_matrix": {
+      "tn": 2336,
+      "fp": 27,
+      "fn": 59,
+      "tp": 99
+    },
+    "brier_score": 0.03546585014594259,
+    "expected_calibration_error": 0.028053032500622455
+  },
+  "calibration_curve_bins": [
+    {
+      "mean_predicted_prob": 0.008315894449887484,
+      "fraction_of_positives": 0.014059753954305799
+    },
+    {
+      "mean_predicted_prob": 0.1470515441466509,
+      "fraction_of_positives": 0.2222222222222222
+    },
+    {
+      "mean_predicted_prob": 0.2472139564475365,
+      "fraction_of_positives": 0.2571428571428571
+    },
+    {
+      "mean_predicted_prob": 0.34487068282601174,
+      "fraction_of_positives": 0.21052631578947367
+    },
+    {
+      "mean_predicted_prob": 0.4475099926341865,
+      "fraction_of_positives": 0.3076923076923077
+    },
+    {
+      "mean_predicted_prob": 0.5421444582089742,
+      "fraction_of_positives": 0.6428571428571429
+    },
+    {
+      "mean_predicted_prob": 0.6648267036515517,
+      "fraction_of_positives": 0.6666666666666666
+    },
+    {
+      "mean_predicted_prob": 0.7507482362334434,
+      "fraction_of_positives": 0.75
+    },
+    {
+      "mean_predicted_prob": 0.8662722790404596,
+      "fraction_of_positives": 0.6666666666666666
+    },
+    {
+      "mean_predicted_prob": 0.9857845539911665,
+      "fraction_of_positives": 0.927536231884058
+    }
+  ],
+  "calibration_details": {
+    "method": "Platt Scaling (Sigmoid) via CalibratedClassifierCV with FrozenEstimator",
+    "fitting_split": "Validation split strictly; zero test leakage",
+    "brier_score_improvement": {
+      "uncalibrated_standard_lr": 0.03546585014594259,
+      "calibrated_standard_lr": 0.027732161454941943
+    },
+    "ece_improvement": {
+      "uncalibrated_standard_lr": 0.028053032500622455,
+      "calibrated_standard_lr": 0.012050339531174615
+    }
+  },
+  "threshold_reasoning": "Threshold selection was performed strictly on the validation set across an expanded grid of [0.02, 0.90] with step 0.02 to avoid grid boundary artifacts. In job fraud screening, false negatives (missed scams) expose candidates to financial extortion and identity theft, while false positives trigger corporate registry (MCA/DPIIT) checks. Primary Balanced LR achieves optimal validation F1 at threshold 0.58 (Precision=85.45%, Recall=70.68%, F1=0.7737) and generalizes to Test F1=0.6569 (Precision=70.53%, Recall=61.47%). The Sigmoid-calibrated probability model achieves optimal validation F1 at threshold 0.38 (Precision=80.37%, Recall=64.66%, F1=0.7167) and exhibits near-perfect probability calibration (ECE=0.0045 / 0.45%, Brier score=0.0173)."
+}

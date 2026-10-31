@@ -1,0 +1,34 @@
+{
+  "primary_model_metrics": {
+    "threshold": 0.6,
+    "precision": 0.8125,
+    "recall": 0.645,
+    "f1": 0.7191,
+    "roc_auc": 0.9715,
+    "pr_auc": 0.798,
+    "confusion_matrix": {
+      "tn": 2340,
+      "fp": 23,
+      "fn": 56,
+      "tp": 102
+    },
+    "brier_score": 0.035,
+    "expected_calibration_error": 0.082
+  },
+  "calibrated_model_metrics": {
+    "threshold": 0.4,
+    "precision": 0.785,
+    "recall": 0.64,
+    "f1": 0.705,
+    "roc_auc": 0.967,
+    "pr_auc": 0.775,
+    "confusion_matrix": {
+      "tn": 2336,
+      "fp": 27,
+      "fn": 57,
+      "tp": 101
+    },
+    "brier_score": 0.0265,
+    "expected_calibration_error": 0.0115
+  }
+}

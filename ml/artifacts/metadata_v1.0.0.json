@@ -1,0 +1,208 @@
+{
+  "version": "v1.0.0",
+  "audit": {
+    "total_rows": 17880,
+    "total_columns": 18,
+    "columns": [
+      "title",
+      "location",
+      "department",
+      "salary_range",
+      "company_profile",
+      "description",
+      "requirements",
+      "benefits",
+      "telecommuting",
+      "has_company_logo",
+      "has_questions",
+      "employment_type",
+      "required_experience",
+      "required_education",
+      "industry",
+      "function",
+      "fraudulent",
+      "in_balanced_dataset"
+    ],
+    "fraudulent_counts": {
+      "f": 17014,
+      "t": 866
+    },
+    "in_balanced_dataset_counts": {
+      "f": 16980,
+      "t": 900
+    },
+    "crosstab_fraud_vs_balanced": {
+      "f": {
+        "f": 16564,
+        "t": 416
+      },
+      "t": {
+        "f": 450,
+        "t": 450
+      }
+    },
+    "exact_duplicate_rows": 235,
+    "missing_values": {
+      "title": 0,
+      "location": 346,
+      "department": 11547,
+      "salary_range": 15012,
+      "company_profile": 3308,
+      "description": 0,
+      "requirements": 2689,
+      "benefits": 7196,
+      "telecommuting": 0,
+      "has_company_logo": 0,
+      "has_questions": 0,
+      "employment_type": 3471,
+      "required_experience": 7050,
+      "required_education": 8105,
+      "industry": 4903,
+      "function": 6455,
+      "fraudulent": 0,
+      "in_balanced_dataset": 0
+    },
+    "missing_percentages": {
+      "title": 0.0,
+      "location": 1.94,
+      "department": 64.58,
+      "salary_range": 83.96,
+      "company_profile": 18.5,
+      "description": 0.0,
+      "requirements": 15.04,
+      "benefits": 40.25,
+      "telecommuting": 0.0,
+      "has_company_logo": 0.0,
+      "has_questions": 0.0,
+      "employment_type": 19.41,
+      "required_experience": 39.43,
+      "required_education": 45.33,
+      "industry": 27.42,
+      "function": 36.1,
+      "fraudulent": 0.0,
+      "in_balanced_dataset": 0.0
+    },
+    "unique_content_groups": 16099,
+    "rows_in_repeated_content_groups": 2460,
+    "conflicting_label_groups": 0,
+    "rows_after_exact_dedup": 17645,
+    "exact_rows_dropped": 235,
+    "split_leakage_check": {
+      "train_val_overlap": 0,
+      "train_test_overlap": 0,
+      "val_test_overlap": 0,
+      "leakage_free": true
+    },
+    "split_summary": {
+      "train": {
+        "total": 12484,
+        "fraudulent": 601,
+        "prevalence": 0.0481416212752323
+      },
+      "validation": {
+        "total": 2560,
+        "fraudulent": 134,
+        "prevalence": 0.05234375
+      },
+      "test": {
+        "total": 2601,
+        "fraudulent": 123,
+        "prevalence": 0.04728950403690888
+      }
+    }
+  },
+  "models_validation": {
+    "LogisticRegression_balanced": {
+      "roc_auc": 0.9868987707792448,
+      "pr_auc": 0.8852819253912061,
+      "f1_at_0.5": 0.8068965517241379,
+      "precision_at_0.5": 0.75,
+      "recall_at_0.5": 0.8731343283582089
+    },
+    "LogisticRegression_standard": {
+      "roc_auc": 0.9749295566684303,
+      "pr_auc": 0.8213131206953664,
+      "f1_at_0.5": 0.4327485380116959,
+      "precision_at_0.5": 1.0,
+      "recall_at_0.5": 0.27611940298507465
+    },
+    "ComplementNaiveBayes": {
+      "roc_auc": 0.920417492094351,
+      "pr_auc": 0.4463286327257204,
+      "f1_at_0.5": 0.448,
+      "precision_at_0.5": 0.4827586206896552,
+      "recall_at_0.5": 0.417910447761194
+    }
+  },
+  "primary_model_metrics": {
+    "threshold": 0.65,
+    "precision": 0.8083333333333333,
+    "recall": 0.7886178861788617,
+    "f1": 0.7983539094650206,
+    "pr_auc": 0.8529944136811152,
+    "roc_auc": 0.9816728675761334,
+    "confusion_matrix": {
+      "tn": 2455,
+      "fp": 23,
+      "fn": 26,
+      "tp": 97
+    },
+    "brier_score": 0.03137669489210981,
+    "expected_calibration_error": 0.09462042909705903
+  },
+  "calibrated_model_metrics": {
+    "threshold": 0.1,
+    "precision": 0.5561797752808989,
+    "recall": 0.8048780487804879,
+    "f1": 0.6578073089700996,
+    "pr_auc": 0.821443975969984,
+    "roc_auc": 0.9757705204170686,
+    "confusion_matrix": {
+      "tn": 2399,
+      "fp": 79,
+      "fn": 24,
+      "tp": 99
+    },
+    "brier_score": 0.022793171166419147,
+    "expected_calibration_error": 0.029255952619689503
+  },
+  "calibration_curve_bins": [
+    {
+      "mean_predicted_prob": 0.024769393689106536,
+      "fraction_of_positives": 0.00990507635163021
+    },
+    {
+      "mean_predicted_prob": 0.13129773682978407,
+      "fraction_of_positives": 0.17105263157894737
+    },
+    {
+      "mean_predicted_prob": 0.24583645263652998,
+      "fraction_of_positives": 0.6666666666666666
+    },
+    {
+      "mean_predicted_prob": 0.33848910017710976,
+      "fraction_of_positives": 0.75
+    },
+    {
+      "mean_predicted_prob": 0.4481009000404139,
+      "fraction_of_positives": 0.8888888888888888
+    },
+    {
+      "mean_predicted_prob": 0.5367932824846402,
+      "fraction_of_positives": 1.0
+    },
+    {
+      "mean_predicted_prob": 0.649096883378938,
+      "fraction_of_positives": 1.0
+    },
+    {
+      "mean_predicted_prob": 0.7552582429773887,
+      "fraction_of_positives": 1.0
+    },
+    {
+      "mean_predicted_prob": 0.8385221410094378,
+      "fraction_of_positives": 1.0
+    }
+  ],
+  "threshold_reasoning": "In job fraud screening, false negatives (failing to identify scams) expose vulnerable job seekers to financial fraud, advance fee scams, and identity theft. Conversely, false positives (flagging legitimate listings) trigger manual review or entity verification steps. We prioritize high recall (>=75%) while preserving strong precision. Balanced Logistic Regression at threshold 0.65 yields 80.83% precision and 78.86% recall on the holdout test set (F1=0.7984). Standard Logistic Regression at threshold 0.10 achieves 80.49% recall, 55.62% precision, with superior empirical probability calibration (Brier score 0.0228, ECE 0.0293)."
+}

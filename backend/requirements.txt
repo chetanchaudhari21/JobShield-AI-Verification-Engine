@@ -1,0 +1,49 @@
+# JobShield AI - Verified Backend Dependencies
+# Generated from verified local Python 3.12 virtual environment (.venv)
+
+# FastAPI & Web Server
+fastapi==0.143.0
+uvicorn==0.54.0
+pydantic==2.14.1
+pydantic-settings==2.15.0
+python-multipart==0.0.32
+starlette==1.7.0
+
+# Database & Migrations
+SQLAlchemy==2.1.4
+psycopg==3.3.6
+psycopg-binary==3.3.6
+alembic==1.20.0
+
+# HTTP & Web Scraping
+requests==2.34.2
+beautifulsoup4==4.15.0
+httpx==0.28.1
+dnspython==2.9.0
+
+# Machine Learning & Scientific Computing
+numpy==2.5.4
+pandas==3.0.6
+scipy==1.18.1
+scikit-learn==1.9.1
+shap==0.53.0
+joblib==1.6.0
+matplotlib==3.11.2
+
+# Document Analysis & OCR
+pymupdf==1.28.2
+pytesseract==0.3.13
+pillow==12.3.0
+reportlab==5.0.1
+
+# Authentication & Security (Argon2id & JWT)
+argon2-cffi==25.1.0
+pyjwt==2.15.1
+
+# Configuration & Utilities
+python-dotenv==1.2.4
+PyYAML==6.0.3
+tqdm==4.70.1
+
+# Testing
+pytest==9.1.1

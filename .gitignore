@@ -1,0 +1,23 @@
+﻿.venv/
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+.pytest_cache/
+node_modules/
+dist/
+build/
+*.log
+
+# Large local datasets
+ml/data/mca/company_master_data_2026-10-13_part*.csv
+ml/mca/company_master_data_2026-10-13_part*.csv
+ml/data/DataSet.csv
+
+# Temporary test output and old backups
+frontend/.vitest/
+ml/backup_v1.0.0/
+
+# Generated candidate model artifacts
+ml/artifacts/*candidate*.joblib
